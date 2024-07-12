@@ -5,6 +5,7 @@ import com.devausa.movies_project.dto.RegisterDTO;
 import com.devausa.movies_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,8 +16,13 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public MessageDTO newRegister(@RequestBody RegisterDTO registerDTO){
-        return service.newUserRegister(registerDTO);
+//    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<MessageDTO> newRegister(@RequestBody RegisterDTO registerDTO){
+        MessageDTO response = service.newUserRegister(registerDTO);
+        //verifico el mensaje que retorna del servicio y si empieza con "Error"
+        if (response.getMessage().startsWith("Error")) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
