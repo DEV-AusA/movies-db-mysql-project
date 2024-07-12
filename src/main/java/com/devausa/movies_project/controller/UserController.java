@@ -1,5 +1,6 @@
 package com.devausa.movies_project.controller;
 
+import com.devausa.movies_project.dto.MessageDTO;
 import com.devausa.movies_project.dto.RegisterDTO;
 import com.devausa.movies_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public RegisterDTO newRegister(@RequestBody RegisterDTO registerDTO){
+    public MessageDTO newRegister(@RequestBody RegisterDTO registerDTO){
         return service.newUserRegister(registerDTO);
     }
 }
